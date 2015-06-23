@@ -20,11 +20,31 @@ module.exports = function(grunt) {
 				src: config.jsSrcDir + '*.js',
 				dest: config.jsConcatDir + 'app.js'
 			}
+		},
+
+		jshint: {
+			options: {
+				//prohibit use of '=='
+				'eqeqeq': true
+			},
+			all: [
+					'GruntFile.js',
+					config.jsSrcDir + '*.js'
+			]
+		},
+
+		watch: {
+			sass: {
+				files: config.scssDir + 'style.scss',
+				tasks: ['sass']
+			}
 		}
 	});
 
 	grunt.registerTask('default', [
 		'sass',
-		'concat'
+		'concat',
+		'jshint',
+		'watch'
 	]);
 };
