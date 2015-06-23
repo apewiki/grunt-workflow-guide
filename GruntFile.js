@@ -4,42 +4,12 @@ module.exports = function(grunt) {
 
 	//All installed grunt modules  are loaded here
 	require('load-grunt-tasks')(grunt);
+	
 
 	var config = grunt.file.readYAML('GruntFile.yml');
+	require('./grunt_tasks/sass.js')(grunt, config);
+	require('./grunt_tasks/javascript.js')(grunt, config);
 
-	grunt.initConfig({
-		sass: {
-			dist: {
-				src: config.scssDir + 'style.scss',
-				dest: config.cssDir + 'style.css'
-			}
-		},
-
-		concat: {
-			dist: {
-				src: config.jsSrcDir + '*.js',
-				dest: config.jsConcatDir + 'app.js'
-			}
-		},
-
-		jshint: {
-			options: {
-				//prohibit use of '=='
-				'eqeqeq': true
-			},
-			all: [
-					'GruntFile.js',
-					config.jsSrcDir + '*.js'
-			]
-		},
-
-		watch: {
-			sass: {
-				files: config.scssDir + 'style.scss',
-				tasks: ['sass']
-			}
-		}
-	});
 
 	grunt.registerTask('default', [
 		'sass',
